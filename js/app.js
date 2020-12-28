@@ -50,15 +50,22 @@ function BuildNav() {
         LinkItem.classList.add("menu__link");
         NavElement.appendChild(LinkItem);
         LinkItem.addEventListener('click', ScrollToAnchorID);
-        LinkItem.addEventListener('click', AddClassActiveToSection);
+        //LinkItem.addEventListener('click', AddClassActiveToSection);
     }
 
 }
 
 // Add class 'active' to section when near top of viewport
 function AddClassActiveToSection(e) {
+
+
     for (let section of Sections) {
-        if (e.target.textContent == section.getAttribute('data-nav')) {
+        var rect = section.getBoundingClientRect();
+        if (rect.top + 70 >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom - 50 <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth)) {
+            console.log(section);
             if (section.classList.contains("your-active-class") == false)
                 section.classList.add("your-active-class");
         } else if (section.classList.contains("your-active-class")) {
@@ -73,7 +80,7 @@ function ScrollToAnchorID(e) {
     for (let section of Sections) {
         if (e.target.textContent == section.getAttribute('data-nav')) {
             window.scrollTo({
-                top: getOffset(section).top - 100,
+                top: getOffset(section).top - 120,
                 left: getOffset(section).left,
                 behavior: 'smooth'
             });
@@ -94,3 +101,4 @@ document.addEventListener('DOMContentLoaded', BuildNav());
 // Scroll to section on link click
 
 // Set sections as active
+window.addEventListener("scroll", AddClassActiveToSection);
