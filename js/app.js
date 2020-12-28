@@ -58,8 +58,9 @@ function BuildNav() {
 // Add class 'active' to section when near top of viewport
 function AddClassActiveToSection(e) {
     for (let section of Sections) {
-        if (e.target.textContent == section.getAttribute('data-nav') && section.classList.contains("your-active-class") == false) {
-            section.classList.add("your-active-class");
+        if (e.target.textContent == section.getAttribute('data-nav')) {
+            if (section.classList.contains("your-active-class") == false)
+                section.classList.add("your-active-class");
         } else if (section.classList.contains("your-active-class")) {
             section.classList.remove("your-active-class");
         }
@@ -91,6 +92,5 @@ function ScrollToAnchorID(e) {
 document.addEventListener('DOMContentLoaded', BuildNav());
 
 // Scroll to section on link click
-function ScrollToSection() {}
+
 // Set sections as active
-function SetSectionsAsActive() {}
