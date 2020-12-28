@@ -50,20 +50,26 @@ function BuildNav() {
         LinkItem.classList.add("menu__link");
         NavElement.appendChild(LinkItem);
         LinkItem.addEventListener('click', ScrollToAnchorID);
-        //LinkItem.addEventListener('click', AddClassActiveToSection);
     }
 
 }
 
-// Add class 'active' to section when near top of viewport
+// Add class 'active' to section when near top of viewport, 
 function AddClassActiveToSection(e) {
 
-
+    let TopResponsive, BottomResponsive;
+    if (document.documentElement.clientWidth < 1000) {
+        TopResponsive = 500, BottomResponsive = 500;
+    } else {
+        TopResponsive = 100, BottomResponsive = 100;
+    }
     for (let section of Sections) {
         var rect = section.getBoundingClientRect();
-        if (rect.top + 70 >= 0 &&
+        console.log("recttop" + rect.top + TopResponsive);
+        console.log(rect.bottom - BottomResponsive);
+        if (rect.top + TopResponsive >= 0 &&
             rect.left >= 0 &&
-            rect.bottom - 50 <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.bottom - BottomResponsive <= (window.innerHeight || document.documentElement.clientHeight) &&
             rect.right <= (window.innerWidth || document.documentElement.clientWidth)) {
             console.log(section);
             if (section.classList.contains("your-active-class") == false)
@@ -71,7 +77,6 @@ function AddClassActiveToSection(e) {
         } else if (section.classList.contains("your-active-class")) {
             section.classList.remove("your-active-class");
         }
-
     }
 }
 
@@ -79,13 +84,18 @@ function AddClassActiveToSection(e) {
 function ScrollToAnchorID(e) {
     for (let section of Sections) {
         if (e.target.textContent == section.getAttribute('data-nav')) {
+            let TopResponsive
+            if (document.documentElement.clientWidth < 1000) {
+                TopResponsive = 180;
+            } else {
+                TopResponsive = 120;
+            }
             window.scrollTo({
-                top: getOffset(section).top - 120,
+                top: getOffset(section).top - TopResponsive,
                 left: getOffset(section).left,
                 behavior: 'smooth'
             });
         }
-
     }
 }
 
